@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
-import './App.css';
 
 const SELECTION_SIGN = '§';
 
@@ -55,7 +54,7 @@ class App extends React.Component {
 
   render = () => (
     <div className="App">
-      <input type="text" onChange={this.handleChange} />
+      <textarea placeholder={`${SELECTION_SIGN}cMy awesome MOTD`} onChange={this.handleChange} />
       <p dangerouslySetInnerHTML={{ __html: this.state.motd }}></p>
     </div>
   );
