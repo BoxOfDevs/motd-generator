@@ -3,6 +3,6 @@
   src: local('Mojangles'), url(./Mojangles.ttf) format('truetype');
 }
 
-p {
+.preview {
   font-family: 'Mojangles'
 }
