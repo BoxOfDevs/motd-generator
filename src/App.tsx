@@ -19,7 +19,8 @@ const colorCodes = {
   c: 'color: #FF5555', // red
   d: 'color: #FF55FF', // light_purple
   e: 'color: #FFFF55', // yellow
-  f: 'color: #FFFFFF' // white
+  f: 'color: #FFFFFF', // white
+  r: 'color: initial; font-weight: initial; text-decoration: initial; font-style: initial;'
 };
 
 const formattingCodes = {
@@ -39,12 +40,11 @@ class App extends React.Component {
     motd: ''
   }
 
-  handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+  handleChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
     let motd = event.currentTarget.value;
 
     for (const [key, value] of Object.entries(allCodes)) {
       motd = motd.replace(`${SELECTION_SIGN}${key}`, `<span style="${value}">`);
-      motd = motd.replace(`${SELECTION_SIGN}r`, `</span>`);
     }
 
     this.setState({
@@ -53,7 +53,7 @@ class App extends React.Component {
   }
 
   render = () => (
-    <div className="App">
+    <div>
       <textarea placeholder={`${SELECTION_SIGN}cMy awesome MOTD`} onChange={this.handleChange} />
       <p dangerouslySetInnerHTML={{ __html: this.state.motd }}></p>
     </div>
