@@ -111,7 +111,7 @@ class App extends React.Component {
     <div>
       {this.state.colorButtons}<br />
       {this.state.formattingButtons}
-      <textarea autoFocus style={{marginTop: 8}} placeholder={`${SELECTION_SIGN}cMy awesome MOTD`} value={this.state.rawMotd} onChange={this.handleChange} />
+      <textarea autoFocus style={{marginTop: 8, resize: 'none'}} placeholder={`${SELECTION_SIGN}cMy awesome MOTD`} value={this.state.rawMotd} onChange={this.handleChange} />
       <p className="preview" dangerouslySetInnerHTML={{ __html: this.state.htmlMotd }}></p>
     </div>
   );
