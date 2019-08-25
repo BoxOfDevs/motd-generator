@@ -40,15 +40,46 @@ class App extends React.Component {
   state = {
     htmlMotd: '',
     rawMotd: '',
-    colorButtons: null
+    colorButtons: null,
+    formattingButtons: null
   }
 
   componentDidMount = () => {
     const colorButtons = Object.entries(colorCodes).map(([ key, val ]) => (
-      <span style={{backgroundColor: val, marginRight: 5, paddingLeft: '24px', paddingTop: '5px', border: '1px solid black'}} onClick={() => this.insertCode(key)} />
+      <>
+        <button style={{paddingRight: 10.5, paddingLeft: 10.5, backgroundColor: val, color: key === '0' ? 'white': 'black'}} onClick={() => this.insertCode(key)}>{`${SELECTION_SIGN}${key}`}</button>
+      </>
     ));
+
+    const formattingButtons = Object.entries(formattingCodes).map(([ key, val ]) => {
+      const formattingButtonNames = {
+        l: 'Bold',
+        m: 'Strikethrough',
+        n: 'Underline',
+        o: 'Italic'
+      };
+
+      const formattingStyle = () => {
+        switch (key) {
+          case 'l':
+            return { fontWeight: 'bold' };
+          case 'm':
+            return { textDecoration: 'line-through' }
+          case 'n':
+            return { textDecoration: 'underline' }
+          case 'o':
+            return { fontStyle: 'italic' }
+        }
+      };
+
+      return (
+        // @ts-ignore
+        <button style={{marginTop: 8, ...formattingStyle()}} onClick={() => this.insertCode(key)}>{formattingButtonNames[key]}</button>
+      )
+    });
     this.setState({
       colorButtons,
+      formattingButtons
     })
   }
 
@@ -79,10 +110,7 @@ class App extends React.Component {
   render = () => (
     <div>
       {this.state.colorButtons}<br />
-      <button style={{marginTop: 8, fontWeight: 'bold'}} onClick={() => this.insertCode('l')}>Bold</button>
-      <button style={{marginTop: 8, textDecoration: 'line-through'}} onClick={() => this.insertCode('m')}>Strikethrough</button>
-      <button style={{marginTop: 8, textDecoration: 'line-through'}} onClick={() => this.insertCode('n')}>Underline</button>
-      <button style={{marginTop: 8, fontStyle: 'italic'}} onClick={() => this.insertCode('o')}>Italic</button>
+      {this.state.formattingButtons}
       <textarea autoFocus style={{marginTop: 8}} placeholder={`${SELECTION_SIGN}cMy awesome MOTD`} value={this.state.rawMotd} onChange={this.handleChange} />
       <p className="preview" dangerouslySetInnerHTML={{ __html: this.state.htmlMotd }}></p>
     </div>
