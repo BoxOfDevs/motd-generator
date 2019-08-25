@@ -78,7 +78,11 @@ class App extends React.Component {
 
   render = () => (
     <div>
-      {this.state.colorButtons}
+      {this.state.colorButtons}<br />
+      <button style={{marginTop: 8, fontWeight: 'bold'}} onClick={() => this.insertCode('l')}>Bold</button>
+      <button style={{marginTop: 8, textDecoration: 'line-through'}} onClick={() => this.insertCode('m')}>Strikethrough</button>
+      <button style={{marginTop: 8, textDecoration: 'line-through'}} onClick={() => this.insertCode('n')}>Underline</button>
+      <button style={{marginTop: 8, fontStyle: 'italic'}} onClick={() => this.insertCode('o')}>Italic</button>
       <textarea autoFocus style={{marginTop: 8}} placeholder={`${SELECTION_SIGN}cMy awesome MOTD`} value={this.state.rawMotd} onChange={this.handleChange} />
       <p className="preview" dangerouslySetInnerHTML={{ __html: this.state.htmlMotd }}></p>
     </div>
