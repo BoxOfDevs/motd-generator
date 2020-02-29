@@ -18,7 +18,8 @@ const colorCodes = {
   c: '#FF5555', // red
   d: '#FF55FF', // light_purple
   e: '#FFFF55', // yellow
-  f: '#FFFFFF' // white
+  f: '#FFFFFF', // white
+  g: '#DAD707' // yellowier yellow (thanks HBIDamian)
 };
 
 const formattingCodes = {
