@@ -32,7 +32,7 @@ const formattingCodes = {
 const allCodes = {
   ...Object.fromEntries(Object.entries(colorCodes).map(([key, val]) => [ key, `color: ${val}`])),
   ...formattingCodes,
-  r: 'color: initial; font-weight: initial; text-decoration: initial; font-style: initial;'
+  r: 'color: initial; font-weight: initial; text-decoration: initial; font-style: initial; display: inline-block;'
 }
 
 
