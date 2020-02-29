@@ -43,6 +43,8 @@ class App extends React.Component {
     formattingButtons: null
   }
 
+  textareaRef = React.createRef<HTMLTextAreaElement>();
+
   componentDidMount = () => {
     const colorButtons = Object.entries(colorCodes).map(([ key, val ]) => (
       <>
@@ -104,6 +106,10 @@ class App extends React.Component {
     let oldRawMotd = this.state.rawMotd;
     oldRawMotd += `${SELECTION_SIGN}${code}`
     this.renderMotd(oldRawMotd);
+    const node = this.textareaRef.current;
+    if (node) {
+      node.focus()
+    }
   }
 
   render = () => (
@@ -111,7 +117,7 @@ class App extends React.Component {
       {this.state.colorButtons}<br />
       {this.state.formattingButtons}
       <button style={{marginTop: 8}} onClick={() => this.insertCode('r')}>Reset</button>
-      <textarea autoFocus style={{marginTop: 8, resize: 'none'}} placeholder={`${SELECTION_SIGN}cMy awesome MOTD`} value={this.state.rawMotd} onChange={this.handleChange} />
+      <textarea ref={this.textareaRef} autoFocus style={{marginTop: 8, resize: 'none'}} placeholder={`${SELECTION_SIGN}cMy awesome MOTD`} value={this.state.rawMotd} onChange={this.handleChange} />
       <p className="preview" dangerouslySetInnerHTML={{ __html: this.state.htmlMotd }}></p>
     </div>
   );
