@@ -41,7 +41,8 @@ class App extends React.Component {
     htmlMotd: '',
     rawMotd: '',
     colorButtons: null,
-    formattingButtons: null
+    formattingButtons: null,
+    kError: false,
   }
 
   textareaRef = React.createRef<HTMLTextAreaElement>();
@@ -79,10 +80,19 @@ class App extends React.Component {
         <button style={{marginTop: 8, ...formattingStyle()}} onClick={() => this.insertCode(key)}>{formattingButtonNames[key]}</button>
       )
     });
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const motd = urlParams.get('motd');
+
     this.setState({
       colorButtons,
-      formattingButtons
+      formattingButtons,
+      rawMotd: motd,
     })
+
+    if (motd) {
+      this.renderMotd(motd);
+    }
   }
 
   handleChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
@@ -97,8 +107,18 @@ class App extends React.Component {
       htmlMotd = htmlMotd.replace(`${SELECTION_SIGN}${key}`, `<span style="${val}">`);
     }
 
-    // do not support random character color
+    // do not support k format code
     htmlMotd = htmlMotd.replace(`${SELECTION_SIGN}k`, '')
+
+    if (rawMotd.includes(`${SELECTION_SIGN}k`)) {
+      this.setState({
+        kError: true
+      })
+    } else {
+      this.setState({
+        kError: false
+      })
+    }
 
     this.setState({
       htmlMotd: htmlMotd,
@@ -121,6 +141,9 @@ class App extends React.Component {
       {this.state.colorButtons}<br />
       {this.state.formattingButtons}
       <button style={{marginTop: 8}} onClick={() => this.insertCode('r')}>Reset</button>
+      {this.state.kError ? (
+          <p className="kerror">We do not support the {`${SELECTION_SIGN}k`} format code.</p>
+      ) : null}
       <textarea ref={this.textareaRef} autoFocus style={{marginTop: 8, resize: 'none'}} placeholder={`${SELECTION_SIGN}cMy awesome MOTD`} value={this.state.rawMotd} onChange={this.handleChange} />
       <p className="preview" dangerouslySetInnerHTML={{__html: this.state.htmlMotd}} />
     </div>
