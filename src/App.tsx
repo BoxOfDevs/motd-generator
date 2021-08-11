@@ -97,6 +97,9 @@ class App extends React.Component {
       htmlMotd = htmlMotd.replace(`${SELECTION_SIGN}${key}`, `<span style="${val}">`);
     }
 
+    // do not support random character color
+    htmlMotd = htmlMotd.replace(`${SELECTION_SIGN}k`, '')
+
     this.setState({
       htmlMotd: htmlMotd,
       rawMotd: rawMotd
@@ -119,7 +122,7 @@ class App extends React.Component {
       {this.state.formattingButtons}
       <button style={{marginTop: 8}} onClick={() => this.insertCode('r')}>Reset</button>
       <textarea ref={this.textareaRef} autoFocus style={{marginTop: 8, resize: 'none'}} placeholder={`${SELECTION_SIGN}cMy awesome MOTD`} value={this.state.rawMotd} onChange={this.handleChange} />
-      <p className="preview" dangerouslySetInnerHTML={{ __html: this.state.htmlMotd }}></p>
+      <p className="preview" dangerouslySetInnerHTML={{__html: this.state.htmlMotd}} />
     </div>
   );
 }
